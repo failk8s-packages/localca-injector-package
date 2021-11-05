@@ -1,0 +1,10 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: #@ "{}".format(data.values.package.name)
+  namespace: #@ "{}-package".format(data.values.package.name)
+stringData:
+  values.yml: 

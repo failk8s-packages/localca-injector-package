@@ -1,0 +1,15 @@
+#! See spec: https://carvel.dev/vendir/docs/latest/vendir-spec/
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+minimumRequiredVersion: 0.18.0
+directories:
+- path: config/upstream
+  contents:
+  - path: .
+    githubRelease:
+      slug: <REPO>/<NAME>
+      tag: <VERSION>
+      disableAutoChecksumValidation: true
+    includePaths:
+    - <PATH>

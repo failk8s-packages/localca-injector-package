@@ -1,0 +1,11 @@
+#@ load("@ytt:data", "data")
+
+---
+images:
+#@ for package in data.values.packages:
+#@ if hasattr(package, 'image') and package.image:
+- image: #@ package.image
+#@ else:
+- image: #@ "{}/{}-package:{}".format(data.values.registry,package.name,package.version)
+#@ end
+#@ end

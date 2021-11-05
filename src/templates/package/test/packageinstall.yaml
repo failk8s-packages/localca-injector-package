@@ -1,0 +1,26 @@
+#@ load("@ytt:data", "data")
+
+#@ def version(n):
+#@   if n == "develop":
+#@     return "0.0.0+develop"
+#@   else:
+#@     return n
+#@   end
+#@ end
+
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: #@ "{}".format(data.values.package.name)
+  namespace: #@ "{}-package".format(data.values.package.name)
+spec:
+  serviceAccountName: #@ "{}".format(data.values.package.name)
+  packageRef:
+    refName: #@ "{}.{}".format(data.values.package.name, data.values.package.domain)
+    versionSelection:
+      constraints: #@ version(data.values.package.version)
+      prereleases: {}
+  values:
+  - secretRef:
+      name: #@ "{}".format(data.values.package.name)

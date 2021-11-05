@@ -1,0 +1,7 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: imgpkg.carvel.dev/v1alpha1
+kind: Bundle
+metadata:
+  name: #@ data.values.package.name

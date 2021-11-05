@@ -1,0 +1,26 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: #@ "{}-package".format(data.values.package.name)
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: #@ "{}".format(data.values.package.name)
+  namespace: #@ "{}-package".format(data.values.package.name)
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: #@ "{}".format(data.values.package.name)
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: #@ "{}".format(data.values.package.name)
+    namespace: #@ "{}-package".format(data.values.package.name)

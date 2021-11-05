@@ -1,0 +1,75 @@
+#@ load("@ytt:data", "data")
+
+#@ def version(n):
+#@   if n == "develop":
+#@     return "0.0.0+develop"
+#@   else:
+#@     return n
+#@   end
+#@ end
+
+#@ for package in data.values.packages:
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: #@ "{}".format(package.name)
+  annotations:
+    kapp.k14s.io/change-group.1: #@ "{}.{}/rbac".format(package.name, package.domain)
+    kapp.k14s.io/change-group.2: "dev.failk8s.com/rbac"
+    kapp.k14s.io/change-rule.insert: "upsert after upserting dev.failk8s.com/namespace"
+    kapp.k14s.io/change-rule.delete: #@ "delete after deleting {}.{}/package".format(package.name, package.domain)
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: #@ "{}".format(package.name)
+    namespace: #@ "{}".format(data.values.package.name)
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: #@ "{}".format(package.name)
+  namespace: #@ "{}".format(data.values.package.name)
+  annotations:
+    kapp.k14s.io/change-group.1: #@ "{}.{}/rbac".format(package.name, package.domain)
+    kapp.k14s.io/change-group.2: "dev.failk8s.com/rbac"
+    kapp.k14s.io/change-rule.insert: "upsert after upserting dev.failk8s.com/namespace"
+    kapp.k14s.io/change-rule.delete: #@ "delete after deleting {}.{}/package".format(package.name, package.domain)
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: #@ "{}".format(package.name)
+  namespace: #@ "{}".format(data.values.package.name)
+  annotations:
+    kapp.k14s.io/change-group: #@ "{}.{}/package".format(package.name, package.domain)
+    kapp.k14s.io/change-rule.insert: #@ "upsert after upserting {}.{}/rbac".format(package.name, package.domain)
+stringData:
+  values.yml:
+
+
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: #@ "{}".format(package.name)
+  namespace: #@ "{}".format(data.values.package.name)
+  annotations:
+    kapp.k14s.io/change-group: #@ "{}.{}/package".format(package.name, package.domain)
+    kapp.k14s.io/change-rule.insert: #@ "upsert after upserting {}.{}/rbac".format(package.name, package.domain)
+spec:
+  serviceAccountName: #@ "{}".format(package.name)
+  packageRef:
+    refName: #@ "{}.{}".format(package.name, package.domain)
+    versionSelection:
+      constraints: #@ version(package.version)
+      prereleases: {}
+  values:
+  - secretRef:
+      name: #@ "{}".format(package.name)
+#@ end

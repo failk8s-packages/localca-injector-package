@@ -1,0 +1,10 @@
+{
+    "registry": "quay.io/failk8s",
+    "package": {
+        "name": "<#PACKAGE-NAME>",
+        "domain": "dev.failk8s.com",
+        "displayName": "<#DISPLAY NAME>",
+        "version": "<#VERSION>"
+    },
+    "packages":[]
+}
