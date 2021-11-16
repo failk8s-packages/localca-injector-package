@@ -1,10 +1,10 @@
 {
     "registry": "quay.io/failk8s",
     "package": {
-        "name": "<#PACKAGE-NAME>",
+        "name": "local-ca-injector",
         "domain": "dev.failk8s.com",
-        "displayName": "<#DISPLAY NAME>",
-        "version": "<#VERSION>"
+        "displayName": "Local CA Injector",
+        "version": "develop"
     },
     "packages":[]
 }

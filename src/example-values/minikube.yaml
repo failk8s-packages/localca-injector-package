@@ -1,1 +1,13 @@
 #! Add your values here (without ytt annotations)
+namespace: mi-ca
+local_ca:
+  crt: |+
+    -----BEGIN CERTIFICATE-----
+    THIS IS JUST AN EXAMPLE
+    -----END CERTIFICATE-----
+  key: |+
+    -----BEGIN RSA PRIVATE KEY-----
+    THIS IS JUST AN EXAMPLE
+    -----END RSA PRIVATE KEY-----
+cluster_issuer:
+  name: local
