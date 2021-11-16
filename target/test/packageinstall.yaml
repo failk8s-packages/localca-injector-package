@@ -1,0 +1,15 @@
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: local-ca-injector
+  namespace: local-ca-injector-package
+spec:
+  serviceAccountName: local-ca-injector
+  packageRef:
+    refName: local-ca-injector.dev.failk8s.com
+    versionSelection:
+      constraints: 1.0.0
+      prereleases: {}
+  values:
+  - secretRef:
+      name: local-ca-injector

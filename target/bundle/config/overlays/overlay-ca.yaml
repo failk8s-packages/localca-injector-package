@@ -1,0 +1,9 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:base64", "base64")
+
+#@overlay/match by=overlay.subset({"kind": "Secret"}), expects=2
+---
+data:
+  tls.crt: #@ base64.encode(data.values.local_ca.crt)
+  tls.key: #@ base64.encode(data.values.local_ca.key)

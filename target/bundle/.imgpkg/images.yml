@@ -1,0 +1,18 @@
+---
+apiVersion: imgpkg.carvel.dev/v1alpha1
+images:
+- annotations:
+    kbld.carvel.dev/id: debian
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: latest
+          url: debian
+  image: index.docker.io/library/debian@sha256:4d6ab716de467aad58e91b1b720f0badd7478847ec7a18f66027d0f8a329a43c
+- annotations:
+    kbld.carvel.dev/id: k8s.gcr.io/pause:3.6
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: "3.6"
+          url: k8s.gcr.io/pause:3.6
+  image: k8s.gcr.io/pause@sha256:3d380ca8864549e74af4b29c10f9cb0956236dfb01c40ca076fb6c37253234db
+kind: ImagesLock
