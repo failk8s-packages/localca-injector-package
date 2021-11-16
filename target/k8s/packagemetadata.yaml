@@ -1,0 +1,7 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  name: local-ca-injector.dev.failk8s.com
+  namespace: kapp-controller-packaging-global
+spec:
+  displayName: Local CA Injector

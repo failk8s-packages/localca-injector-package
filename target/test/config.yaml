@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: local-ca-injector
+  namespace: local-ca-injector-package
+stringData:
+  values.yml: null
