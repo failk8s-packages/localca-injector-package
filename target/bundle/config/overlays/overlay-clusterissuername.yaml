@@ -1,0 +1,9 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:base64", "base64")
+
+#@overlay/match by=overlay.subset({"kind": "ClusterIssuer"})
+---
+kind: ClusterIssuer
+metadata:
+  name: #@ data.values.cluster_issuer.name

@@ -1,0 +1,10 @@
+#@data/values-schema
+---
+#! Add your values here
+namespace: localca-injector
+create_namespace: True
+local_ca:
+  crt: ""
+  key: ""
+cluster_issuer:
+  name: local-ca

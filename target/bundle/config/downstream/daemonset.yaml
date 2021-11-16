@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: localca-injector
+  name: localca-setup
+  labels:
+    app: localca-setup
+spec:
+  selector:
+    matchLabels:
+      app: localca-setup
+  template:
+    metadata:
+      labels:
+        app: localca-setup
+    spec:
+      initContainers:
+      - name: init-node
+        command: ["nsenter"]
+        args: ["--mount=/proc/1/ns/mnt", "--", "sh", "-c", "$(SETUP_SCRIPT)"]
+        image: debian
+        env:
+        - name: TRUSTED_CERT
+          valueFrom:
+            secretKeyRef:
+              name: trusted-ca
+              key: tls.crt
+        - name: SETUP_SCRIPT
+          valueFrom:
+            configMapKeyRef:
+              name: setup-script
+              key: setup.sh
+        securityContext:
+          privileged: true
+      containers:
+      - name: wait
+        image: k8s.gcr.io/pause:3.6
+      hostPID: true
+      hostNetwork: true
+      serviceAccountName: localca-injector
