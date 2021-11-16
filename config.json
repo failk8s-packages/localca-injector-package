@@ -4,7 +4,7 @@
         "name": "local-ca-injector",
         "domain": "dev.failk8s.com",
         "displayName": "Local CA Injector",
-        "version": "1.0.0"
+        "version": "develop"
     },
     "packages":[]
 }
