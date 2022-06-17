@@ -13,15 +13,14 @@ apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: Package
 metadata:
   name: #@ "{}.{}.{}".format(data.values.package.name, data.values.package.domain, version(data.values.package.version))
-  namespace: kapp-controller-packaging-global
 spec:
   refName: #@ "{}.{}".format(data.values.package.name, data.values.package.domain)
   version: #@ version(data.values.package.version)
-#!  releaseNotes: "Fixed some bugs"
-#!  capacityRequirementsDescription: "RAM: 10GB"
-#!  licenses:
-#!  - "Apache 2.0"
-#!  releasedAt: 2021-05-05T18:57:06Z
+  #!  releaseNotes: "Fixed some bugs"
+  #!  capacityRequirementsDescription: "RAM: 10GB"
+  #!  licenses:
+  #!  - "Apache 2.0"
+  #!  releasedAt: 2021-05-05T18:57:06Z
   template:
     spec:
       fetch:

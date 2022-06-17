@@ -2,24 +2,23 @@ apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: Package
 metadata:
   name: local-ca-injector.dev.failk8s.com.0.0.0+develop
-  namespace: kapp-controller-packaging-global
 spec:
   refName: local-ca-injector.dev.failk8s.com
   version: 0.0.0+develop
   template:
     spec:
       fetch:
-      - imgpkgBundle:
-          image: quay.io/failk8s/local-ca-injector-package:develop
+        - imgpkgBundle:
+            image: quay.io/failk8s/local-ca-injector-package:develop
       template:
-      - ytt:
-          paths:
-          - config/
-      - kbld:
-          paths:
-          - '-'
-          - .imgpkg/images.yml
+        - ytt:
+            paths:
+              - config/
+        - kbld:
+            paths:
+              - "-"
+              - .imgpkg/images.yml
       deploy:
-      - kapp:
-          rawOptions:
-          - --wait-timeout=5m
+        - kapp:
+            rawOptions:
+              - --wait-timeout=5m
